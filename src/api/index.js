@@ -14,8 +14,14 @@ export default ({ config, db }) => {
 	});
 
 	api.post('/libraryBot', (req, res) => {
-		
-	})
+		// return res.json({req.body});
+		switch(req.body.queryResult.action){
+			case 'searchBookTitle':
+				console.log("Searching book!");
+				break;
+
+		}
+	});
 
 	return api;
 }
