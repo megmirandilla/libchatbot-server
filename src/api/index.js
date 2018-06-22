@@ -17,9 +17,12 @@ export default ({ config, db }) => {
 		// return res.json({req.body});
 		switch(req.body.queryResult.action){
 			case 'searchBookTitle':
-				console.log("Searching book!");
+				console.log("Search book title");
 				break;
-
+			case 'searchAuthorBook':
+				console.log("Search book by author");
+				break;
+			
 		}
 	});
 
