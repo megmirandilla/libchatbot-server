@@ -14,17 +14,42 @@ export default ({ config, db }) => {
 	});
 
 	api.post('/libraryBot', (req, res) => {
-		// return res.json({req.body});
+		let val = ""
+		let title = "";
+		let author = "";
+		let category = "";
+		
 		switch(req.body.queryResult.action){
 			case 'searchBookTitle':
-				console.log("Search book title");
+				title = req.body.queryResult.parameters.title;
+				author = req.body.queryResult.parameters.author;
+				category = req.body.queryResult.parameters.category;
+				if(author==="" && category==="") val = `searching book titled ${title}`;
+				else if(category==="") val = `searching book titled ${title} by ${author}`;
+				else if(author==="") val = `searching book about ${category} titled ${title}`;
+				else val = `searching book about ${category} titled ${title} by ${author}`;
+				
 				break;
 			case 'searchAuthorBook':
-				console.log("Search book by author");
+				author = req.body.queryResult.parameters.author;
+				category = req.body.queryResult.parameters.category;
+				if(category==="") val = `Searching book by ${author}`;
+				else val = `Searching book by ${author} about ${category}`;
 				break;
-			
+			case 'searchCategory':
+				category = req.body.queryResult.parameters.category;
+				val = `Searching books about ${category}`;
+				break;
+			case 'borrowBook':
+				title = req.body.queryResult.parameters.title;
+				val = `You want to borrow the book ${title}`;
+				break;
 		}
+		console.log(val);
+		return res.json({ "fulfillmentText":val });			
 	});
 
 	return api;
 }
+
+// ssh -R meg:80:localhost:8080 serveo.net
