@@ -1,6 +1,7 @@
 import { version } from '../../package.json';
 import { Router } from 'express';
 import facets from './facets';
+import * as funcs from './functions';
 
 export default ({ config, db }) => {
 	let api = Router();
@@ -21,15 +22,7 @@ export default ({ config, db }) => {
 		
 		switch(req.body.queryResult.action){
 			case 'searchBookTitle':
-				title = req.body.queryResult.parameters.title;
-				author = req.body.queryResult.parameters.author;
-				category = req.body.queryResult.parameters.category;
-				if(author==="" && category==="") val = `searching book titled ${title}`;
-				else if(category==="") val = `searching book titled ${title} by ${author}`;
-				else if(author==="") val = `searching book about ${category} titled ${title}`;
-				else val = `searching book about ${category} titled ${title} by ${author}`;
-				
-				break;
+				return funcs.searchBookTitle(db, req, res);
 			case 'searchAuthorBook':
 				author = req.body.queryResult.parameters.author;
 				category = req.body.queryResult.parameters.category;

@@ -11,13 +11,13 @@ export function searchBookTitle(db, req, res) {
 		values = ['%' + title + '%'];
 	}else if(category==="") {
 		queryString = 'SELECT title, author, category, borrower FROM books WHERE title like ? AND author like ?';
-		values = ['%' + title + '%', '%' + author '%'];
+		values = ['%' + title + '%', '%' + author + '%'];
 	}else if(author==="") {
 		queryString = 'SELECT title, author, category, borrower FROM books WHERE title like ? AND category like ?';
-		values = ['%' + title + '%', '%' + category '%' ];
+		values = ['%' + title + '%', '%' + category + '%' ];
 	}else {
 		queryString = 'SELECT title, author, category, borrower FROM books WHERE title like ? AND author like ? AND category like ?';
-		values = ['%' + title + '%', '%' + author '%', '%' + category '%' ];
+		values = ['%' + title + '%', '%' + author + '%', '%' + category + '%' ];
 	}
 
 	if(queryString && values) {
