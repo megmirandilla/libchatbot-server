@@ -14,7 +14,7 @@ export default ({ config, db }) => {
 		res.json({ version });
 	});
 
-	api.post('/libraryBot', (req, res) => {
+	api.post('/libraryBot', async(req, res) => {
 
 		await funcs.addUser(db, req, res);
 		
