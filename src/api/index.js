@@ -15,12 +15,12 @@ export default ({ config, db }) => {
 	});
 
 	api.post('/libraryBot', (req, res) => {
-		let val = ""
-		let title = "";
-		let author = "";
-		let category = "";
+
+		await funcs.addUser(db, req, res);
 		
 		switch(req.body.queryResult.action){
+			case 'libraryBooks':
+				return funcs.libraryBooks(db, req, res);
 			case 'searchBookTitle':
 				return funcs.searchBookTitle(db, req, res);
 			case 'searchAuthorBook':
@@ -32,8 +32,7 @@ export default ({ config, db }) => {
 			case 'returnBook':
 				return funcs.borrowBook(db, req, res);				
 		}
-		console.log(val);
-		return res.json({ "fulfillmentText":val });			
+		
 	});
 
 	return api;

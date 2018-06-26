@@ -151,3 +151,53 @@ export function returnBook(db, req, res) {
 	});
 }
 
+export function libraryBooks(db, req, res) {
+	var queryString = 'SELECT title, author, category, borrower FROM books';
+
+	db.query(queryString, (err, rows) => {
+		if(err){
+			console.log(err);
+			return res.json({ fulfillmentText: 'I didn\'t get that. Can you rephrase it?' });
+		}
+
+		if(!rows.length) {
+			return res.json({ fulfillmentText: 'There are no books yet in the library.'});	
+		}
+
+		var val;
+		for(var i=0; i<rows.length; i++){
+			val += '\n\nTitle: ' + rows[i].title + '\nAuthor: ' + rows[i].author + '\nCategory: ' + rows[i].category + '\nBorrower: ' + rows[i].borrower
+		}
+
+		return res.json({ fulfillmentText: val });
+	});
+}
+
+export function addUser(db, req, res) {
+	return new Promise((resolve, reject) => {
+		var userid = req.body.session;
+		var queryString = 'SELECT userid FROM user WHERE userid = ?';
+
+		db.query(queryString, userid, (err, rows) => {
+			if(err) {
+				console.log(err);
+				return reject();
+			} else {
+				if(!rows.length) {
+					queryString = 'INSERT INTO user VALUES (?)';
+
+					db.query(queryString, userid, (err, rows) => {
+						if(err){
+							console.log(err);
+							return reject();
+						} else {
+							return resolve();
+						}
+					});
+				} else {
+					return resolve();
+				}
+			}
+		});
+	});
+}

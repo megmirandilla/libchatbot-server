@@ -9,8 +9,9 @@ CREATE TABLE user (
 
 CREATE TABLE books (
 	bookid INT(15) NOT NULL AUTO_INCREMENT,
-	title VARCHAR(256) NOT NULL,
-	author VARCHAR(256) NOT NULL,
-	category VARCHAR(256) NOT NULL,
-	borrower VARCHAR(256) DEFAULT NULL
+	title TEXT NOT NULL,
+	author TEXT NOT NULL,
+	category TEXT NOT NULL,
+	borrower VARCHAR(256) DEFAULT NULL,
+	PRIMARY KEY (bookid)
 );
