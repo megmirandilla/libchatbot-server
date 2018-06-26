@@ -24,19 +24,13 @@ export default ({ config, db }) => {
 			case 'searchBookTitle':
 				return funcs.searchBookTitle(db, req, res);
 			case 'searchAuthorBook':
-				author = req.body.queryResult.parameters.author;
-				category = req.body.queryResult.parameters.category;
-				if(category==="") val = `Searching book by ${author}`;
-				else val = `Searching book by ${author} about ${category}`;
-				break;
+				return funcs.searchAuthorBook(db, req, res);
 			case 'searchCategory':
-				category = req.body.queryResult.parameters.category;
-				val = `Searching books about ${category}`;
-				break;
+				return funcs.searchCategory(db, req, res);
 			case 'borrowBook':
-				title = req.body.queryResult.parameters.title;
-				val = `You want to borrow the book ${title}`;
-				break;
+				return funcs.borrowBook(db, req, res);
+			case 'returnBook':
+				return funcs.borrowBook(db, req, res);				
 		}
 		console.log(val);
 		return res.json({ "fulfillmentText":val });			
