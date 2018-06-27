@@ -15,7 +15,7 @@ export default ({ config, db }) => {
 	});
 
 	api.post('/libraryBot', (req, res) => {
-		try {
+		// try {
 			// await funcs.addUser(db, req, res);
 			
 			switch(req.body.queryResult.action){
@@ -31,13 +31,13 @@ export default ({ config, db }) => {
 					return funcs.borrowBook(db, req, res);
 				case 'returnBook':
 					return funcs.returnBook(db, req, res);
-				default:
-					return res.json({fulfillmentText: "There was an error. Please try again."});			
+				// default:
+				// 	return res.json({fulfillmentText: "There was an error. Please try again."});			
 			} 
-		} catch(e) {
-			console.log(e);
-				return res.json({fulfillmentText: "There was an error. Please try again."});
-		}
+		// } catch(e) {
+		// 	console.log(e);
+		// 		return res.json({fulfillmentText: "There was an error. Please try again."});
+		// }
 		
 	});
 

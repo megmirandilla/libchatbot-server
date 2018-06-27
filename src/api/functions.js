@@ -27,6 +27,8 @@
 // 	});
 // }
 
+
+
 export function searchBookTitle(db, req, res) {
 	const params = req.body.queryResult.parameters;
 	let title = params.title;
@@ -60,11 +62,20 @@ export function searchBookTitle(db, req, res) {
 				return res.json({ fulfillmentText: 'There is no book matching that description. Please try again.'});
 			}
 
-			var val;
+			var val = 'Here are the books:\n';
 			for(var i=0; i<rows.length; i++){
 				val += '\n\nTitle: ' + rows[i].title + '\nAuthor: ' + rows[i].author + '\nCategory: ' + rows[i].category + '\nBorrower: ' + rows[i].borrower
 			}
 
+			var FBMessenger = require('fb-messenger');
+			var messenger = new FBMessenger("EAAdZAxldZCpbkBAFQoJUsrhZAPwVpw2qYxf4b6ffTByZAfQNNVNtRaZCQhg7RuETKKHkdvWsqasZAsew4EruMfSEaYZBaZAvBUpSXqvjKXY0N4psTZCQFd3AaYZAvvnzwy483zhFCRLG2NC0TZAeD2gVuIvVr0KkaXsyeV0FcEWjffvBgZDZD");
+			
+			var id = req.body.originalDetectIntentRequest.payload.data.sender.id;
+			messenger.sendTextMessage(id, 'Do you wish to borrow this book? Try \'borrow book title\'', function (err, body) {
+			  if(err) return console.error(err)
+			  console.log(body)
+			})
+			// console.log(req.body.originalDetectIntentRequest.payload.data.sender.id);
 			return res.json({ fulfillmentText: val });
 		});
 	} else {
@@ -130,6 +141,7 @@ export function borrowBook(db, req, res) {
 		}
 
 		if(!rows.length) {
+			console.log(title);
 			return res.json({ fulfillmentText: 'There is no book matching that description. Please try again.'});	
 		}
 
@@ -138,7 +150,7 @@ export function borrowBook(db, req, res) {
 		}
 
 		queryString = 'UPDATE books SET borrower = ? WHERE title like ? ORDER BY title LIMIT 1';
-		const val = [usesr, title];
+		const val = [user, title];
 
 		db.query(queryString, val, (err, rows) => {
 			if(err){
