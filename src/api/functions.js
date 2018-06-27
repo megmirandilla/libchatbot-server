@@ -1,3 +1,32 @@
+// export function addUser(db, req, res) {
+// 	return new Promise(async (resolve, reject) => {
+// 		var userid = req.body.session;
+// 		var queryString = 'SELECT userid FROM user WHERE userid = ?';
+
+// 		db.query(queryString, userid, (err, rows) => {
+// 			if(err) {
+// 				console.log(err);
+// 				return reject();
+// 			} else {
+// 				if(!rows.length) {
+// 					queryString = 'INSERT INTO user VALUES (?)';
+
+// 					db.query(queryString, userid, (err, rows) => {
+// 						if(err){
+// 							console.log(err);
+// 							return reject();
+// 						} else {
+// 							return resolve();
+// 						}
+// 					});
+// 				} else {
+// 					return resolve();
+// 				}
+// 			}
+// 		});
+// 	});
+// }
+
 export function searchBookTitle(db, req, res) {
 	const params = req.body.queryResult.parameters;
 	let title = params.title;
@@ -170,34 +199,5 @@ export function libraryBooks(db, req, res) {
 		}
 
 		return res.json({ fulfillmentText: val });
-	});
-}
-
-export function addUser(db, req, res) {
-	return new Promise((resolve, reject) => {
-		var userid = req.body.session;
-		var queryString = 'SELECT userid FROM user WHERE userid = ?';
-
-		db.query(queryString, userid, (err, rows) => {
-			if(err) {
-				console.log(err);
-				return reject();
-			} else {
-				if(!rows.length) {
-					queryString = 'INSERT INTO user VALUES (?)';
-
-					db.query(queryString, userid, (err, rows) => {
-						if(err){
-							console.log(err);
-							return reject();
-						} else {
-							return resolve();
-						}
-					});
-				} else {
-					return resolve();
-				}
-			}
-		});
 	});
 }
