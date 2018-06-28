@@ -16,7 +16,7 @@ export default ({ config, db }) => {
 
 	api.post('/libraryBot', (req, res) => {
 		// try {
-			// await funcs.addUser(db, req, res);
+			funcs.addUser(db, req, res);
 			
 			switch(req.body.queryResult.action){
 				case 'libraryBooks':

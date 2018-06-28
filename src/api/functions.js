@@ -27,6 +27,40 @@
 // 	});
 // }
 
+export function addUser(db, req, res) {
+	// console.log(req.body.originalDetectIntentRequest);
+	var queryString = 'SELECT userid FROM user WHERE userid = ?';
+	const src = req.body.originalDetectIntentRequest.source;
+	var userid;
+
+	if(src === 'facebook') {
+		userid = req.body.originalDetectIntentRequest.payload.data.sender.id;
+	} else {
+		userid = req.body.session;
+	}
+	// console.log(userid)
+
+	db.query(queryString, userid, (err, rows) => {
+		if(err){
+			console.log(err);
+		} else {
+			if(!rows.length){
+				console.log("New user detected. " + rows.length);
+				queryString = 'INSERT INTO user VALUES (?)';
+
+				db.query(queryString, userid, (err, rows) => {
+					if(err) {
+						console.log(err);
+					}
+
+				});
+			} else {
+				console.log("User exists already");
+			}
+		}
+
+	});
+}
 
 
 export function searchBookTitle(db, req, res) {
@@ -131,7 +165,15 @@ export function searchCategory(db, req, res) {
 
 export function borrowBook(db, req, res) {
 	const title = req.body.queryResult.parameters.title;
-	const user = req.body.session;
+	const src = req.body.originalDetectIntentRequest.source;
+	var userid;
+
+	if(src === 'facebook') {
+		userid = req.body.originalDetectIntentRequest.payload.data.sender.id;
+	} else {
+		userid = req.body.session;
+	}
+
 	var queryString = 'SELECT borrower FROM books WHERE title like ?';
 
 	db.query(queryString, '%'+title+'%', (err, rows) => {
@@ -150,7 +192,7 @@ export function borrowBook(db, req, res) {
 		}
 
 		queryString = 'UPDATE books SET borrower = ? WHERE title like ? ORDER BY title LIMIT 1';
-		const val = [user, title];
+		const val = [userid, '%'+title+'%'];
 
 		db.query(queryString, val, (err, rows) => {
 			if(err){
@@ -158,16 +200,24 @@ export function borrowBook(db, req, res) {
 				return res.json({ fulfillmentText: 'I didn\'t get that. Can you rephrase it?' });
 			}
 
-			return res.json({ fulfillmentText: 'You have successfully borrowed the book.' });						
+			return res.json({ fulfillmentText: 'You have successfully borrowed the book'});
 		});
 	});
 }
 
 export function returnBook(db, req, res) {
 	const title = req.body.queryResult.parameters.title;
-	const user = req.body.session;
+	const src = req.body.originalDetectIntentRequest.source;
+	var userid;
+
+	if(src === 'facebook') {
+		userid = req.body.originalDetectIntentRequest.payload.data.sender.id;
+	} else {
+		userid = req.body.session;
+	}
+
 	var queryString = 'SELECT bookid, title FROM books WHERE title like ? AND borrower = ?';
-	const values = ['%'+title+'%', user];
+	const values = ['%'+title+'%', userid];
 
 	db.query(queryString, values, (err, rows) => {
 		if(err) {
