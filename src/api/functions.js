@@ -1,34 +1,4 @@
-// export function addUser(db, req, res) {
-// 	return new Promise(async (resolve, reject) => {
-// 		var userid = req.body.session;
-// 		var queryString = 'SELECT userid FROM user WHERE userid = ?';
-
-// 		db.query(queryString, userid, (err, rows) => {
-// 			if(err) {
-// 				console.log(err);
-// 				return reject();
-// 			} else {
-// 				if(!rows.length) {
-// 					queryString = 'INSERT INTO user VALUES (?)';
-
-// 					db.query(queryString, userid, (err, rows) => {
-// 						if(err){
-// 							console.log(err);
-// 							return reject();
-// 						} else {
-// 							return resolve();
-// 						}
-// 					});
-// 				} else {
-// 					return resolve();
-// 				}
-// 			}
-// 		});
-// 	});
-// }
-
 export function addUser(db, req, res) {
-	// console.log(req.body.originalDetectIntentRequest);
 	var queryString = 'SELECT userid FROM user WHERE userid = ?';
 	const src = req.body.originalDetectIntentRequest.source;
 	var userid;
@@ -38,7 +8,6 @@ export function addUser(db, req, res) {
 	} else {
 		userid = req.body.session;
 	}
-	// console.log(userid)
 
 	db.query(queryString, userid, (err, rows) => {
 		if(err){
@@ -109,7 +78,6 @@ export function searchBookTitle(db, req, res) {
 			  if(err) return console.error(err)
 			  console.log(body)
 			})
-			// console.log(req.body.originalDetectIntentRequest.payload.data.sender.id);
 			return res.json({ fulfillmentText: val });
 		});
 	} else {

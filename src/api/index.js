@@ -15,30 +15,23 @@ export default ({ config, db }) => {
 	});
 
 	api.post('/libraryBot', (req, res) => {
-		// try {
-			funcs.addUser(db, req, res);
-			
-			switch(req.body.queryResult.action){
-				case 'libraryBooks':
-					return funcs.libraryBooks(db, req, res);
-				case 'searchBookTitle':
-					return funcs.searchBookTitle(db, req, res);
-				case 'searchAuthorBook':
-					return funcs.searchAuthorBook(db, req, res);
-				case 'searchCategory':
-					return funcs.searchCategory(db, req, res);
-				case 'borrowBook':
-					return funcs.borrowBook(db, req, res);
-				case 'returnBook':
-					return funcs.returnBook(db, req, res);
-				// default:
-				// 	return res.json({fulfillmentText: "There was an error. Please try again."});			
-			} 
-		// } catch(e) {
-		// 	console.log(e);
-		// 		return res.json({fulfillmentText: "There was an error. Please try again."});
-		// }
 		
+		funcs.addUser(db, req, res);
+		
+		switch(req.body.queryResult.action){
+			case 'libraryBooks':
+				return funcs.libraryBooks(db, req, res);
+			case 'searchBookTitle':
+				return funcs.searchBookTitle(db, req, res);
+			case 'searchAuthorBook':
+				return funcs.searchAuthorBook(db, req, res);
+			case 'searchCategory':
+				return funcs.searchCategory(db, req, res);
+			case 'borrowBook':
+				return funcs.borrowBook(db, req, res);
+			case 'returnBook':
+				return funcs.returnBook(db, req, res);
+		}		
 	});
 
 	return api;
