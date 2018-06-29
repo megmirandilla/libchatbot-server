@@ -97,8 +97,10 @@ export function searchBookTitle(db, req, res) {
 			}
 
 			var val = 'Here are the books:\n';
+			var brwr;
 			for(var i=0; i<rows.length; i++){
-				val += '\n\nTitle: ' + rows[i].title + '\nAuthor: ' + rows[i].author + '\nCategory: ' + rows[i].category + '\nBorrower: ' + rows[i].borrower
+				brwr = (!rows[i].borrower) ? "Available":"Taken";
+				val += '\n\nTitle: ' + rows[i].title + '\nAuthor: ' + rows[i].author + '\nCategory: ' + rows[i].category + '\nStatus: ' + brwr;
 			}
 
 			var FBMessenger = require('fb-messenger');
@@ -107,7 +109,6 @@ export function searchBookTitle(db, req, res) {
 			var id = req.body.originalDetectIntentRequest.payload.data.sender.id;
 			messenger.sendTextMessage(id, 'Do you wish to borrow this book? Try \'borrow book title\'', function (err, body) {
 			  if(err) return console.error(err)
-			  console.log(body)
 			})
 			return res.json({ fulfillmentText: val });
 		});
@@ -131,10 +132,12 @@ export function searchAuthorBook(db, req, res) {
 		}
 
 		var val;
+		var brwr;
 		for(var i=0; i<rows.length; i++){
-			val += '\n\nTitle: ' + rows[i].title + '\nAuthor: ' + rows[i].author + '\nCategory: ' + rows[i].category + '\nBorrower: ' + rows[i].borrower
+			brwr = (!rows[i].borrower) ? "Available":"Taken";
+			val += '\n\nTitle: ' + rows[i].title + '\nAuthor: ' + rows[i].author + '\nCategory: ' + rows[i].category + '\nStatus: ' + brwr;
 		}
-
+		
 		return res.json({ fulfillmentText: val });
 	});
 }
@@ -154,8 +157,10 @@ export function searchCategory(db, req, res) {
 		}
 
 		var val;
+		var brwr;
 		for(var i=0; i<rows.length; i++){
-			val += '\n\nTitle: ' + rows[i].title + '\nAuthor: ' + rows[i].author + '\nCategory: ' + rows[i].category + '\nBorrower: ' + rows[i].borrower
+			brwr = (!rows[i].borrower) ? "Available":"Taken";
+			val += '\n\nTitle: ' + rows[i].title + '\nAuthor: ' + rows[i].author + '\nCategory: ' + rows[i].category + '\nStatus: ' + brwr;
 		}
 
 		return res.json({ fulfillmentText: val });
@@ -255,10 +260,11 @@ export function libraryBooks(db, req, res) {
 		}
 
 		var val;
+		var brwr;
 		for(var i=0; i<rows.length; i++){
-			val += '\n\nTitle: ' + rows[i].title + '\nAuthor: ' + rows[i].author + '\nCategory: ' + rows[i].category + '\nBorrower: ' + rows[i].borrower
+			brwr = (!rows[i].borrower) ? "Available":"Taken";
+			val += '\n\nTitle: ' + rows[i].title + '\nAuthor: ' + rows[i].author + '\nCategory: ' + rows[i].category + '\nStatus: ' + brwr;
 		}
-
 		return res.json({ fulfillmentText: val });
 	});
 }
