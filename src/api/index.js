@@ -31,6 +31,8 @@ export default ({ config, db }) => {
 				return funcs.borrowBook(db, req, res);
 			case 'returnBook':
 				return funcs.returnBook(db, req, res);
+			case 'help':
+				return funcs.helpReply(db, req, res);
 		}		
 	});
 

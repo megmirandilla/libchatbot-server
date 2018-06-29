@@ -1,4 +1,35 @@
+export function helpReply(db, req, res) {
+
+	return res.json({
+		"fulfillmentText": "You can do the following:\n1. show all books\n2. search book title (can also include author and category)\n3. show books by author\n4. books about category\n5. borrow book\n6. return book",
+	    "fulfillmentMessages": [
+	      {
+	        "quickReplies": {
+	          "title": "You can do the following:",
+	          "quickReplies": [
+	            "show all books",
+	            "search book",
+	            "show books by",
+	            "books about",
+	            "borrow book",
+	            "return book"
+	          ]
+	        },
+	        "platform": "FACEBOOK"
+	      },
+	      {
+	        "text": {
+	          "text": [
+	            "You can do the following:\n1. show all books\n2. search book title (can also include author and category)\n3. show books by author\n4. books about category\n5. borrow book\n6. return book"
+	          ]
+	        }
+	      }
+	    ]
+	});
+}
+
 export function addUser(db, req, res) {
+	// console.log(req.body);
 	var queryString = 'SELECT userid FROM user WHERE userid = ?';
 	const src = req.body.originalDetectIntentRequest.source;
 	var userid;
