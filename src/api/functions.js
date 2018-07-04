@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 export function helpReply(db, req, res) {
 
 	return res.json({
@@ -8,7 +10,7 @@ export function helpReply(db, req, res) {
 	          "title": "You can do the following:",
 	          "quickReplies": [
 	            "show all books",
-	            "search book",
+	            "search book titled",
 	            "show books by",
 	            "books about",
 	            "borrow book",
@@ -62,6 +64,54 @@ export function addUser(db, req, res) {
 	});
 }
 
+export function pushNotif(db, req, res) {
+	var body = { 
+		"messaging_type": "update",
+		"recipient": {
+		"id": req.body.originalDetectIntentRequest.payload.data.sender.id
+		},
+		"message": {
+		"text": "Do you wish to borrow this book? Try \'borrow book title\'"
+		}
+	 };
+	fetch('"https://graph.facebook.com/v2.6/me/messages?access_token="https://graph.facebook.com/v2.6/me/messages?access_token=EAAdZAxldZCpbkBAFQoJUsrhZAPwVpw2qYxf4b6ffTByZAfQNNVNtRaZCQhg7RuETKKHkdvWsqasZAsew4EruMfSEaYZBaZAvBUpSXqvjKXY0N4psTZCQFd3AaYZAvvnzwy483zhFCRLG2NC0TZAeD2gVuIvVr0KkaXsyeV0FcEWjffvBgZDZD', { 
+		method: 'POST',
+		body:    JSON.stringify(body),
+		headers: { 'Content-Type': 'application/json' },
+	})
+		.then(res => res.json())
+			.then(json => console.log(json));
+}
+
+export function returnThreadControl(db, req, res) {
+	var body = { 
+		"recipient":{"id":req.body.originalDetectIntentRequest.payload.data.sender.id},
+		"target_app_id":2073974752921975,
+		"metadata":"String to pass to secondary receiver app"
+	 };
+	fetch('https://graph.facebook.com/v2.6/me/pass_thread_control?access_token=EAAdZAxldZCpbkBAFQoJUsrhZAPwVpw2qYxf4b6ffTByZAfQNNVNtRaZCQhg7RuETKKHkdvWsqasZAsew4EruMfSEaYZBaZAvBUpSXqvjKXY0N4psTZCQFd3AaYZAvvnzwy483zhFCRLG2NC0TZAeD2gVuIvVr0KkaXsyeV0FcEWjffvBgZDZD', { 
+		method: 'POST',
+		body:    JSON.stringify(body),
+		headers: { 'Content-Type': 'application/json' },
+	})
+		.then(res => res.json())
+			.then(json => console.log(json));
+}
+
+export function passThreadControl(db, req, res) {
+	var body = { 
+		"recipient":{"id":req.body.originalDetectIntentRequest.payload.data.sender.id},
+		"target_app_id":2073974752921975,
+		"metadata":"String to pass to secondary receiver app"
+	 };
+	fetch('https://graph.facebook.com/v2.6/me/pass_thread_control?access_token=EAAdZAxldZCpbkBAFQoJUsrhZAPwVpw2qYxf4b6ffTByZAfQNNVNtRaZCQhg7RuETKKHkdvWsqasZAsew4EruMfSEaYZBaZAvBUpSXqvjKXY0N4psTZCQFd3AaYZAvvnzwy483zhFCRLG2NC0TZAeD2gVuIvVr0KkaXsyeV0FcEWjffvBgZDZD', { 
+		method: 'POST',
+		body:    JSON.stringify(body),
+		headers: { 'Content-Type': 'application/json' },
+	})
+		.then(res => res.json())
+			.then(json => console.log(json));
+}
 
 export function searchBookTitle(db, req, res) {
 	const params = req.body.queryResult.parameters;
@@ -103,13 +153,14 @@ export function searchBookTitle(db, req, res) {
 				val += '\n\nTitle: ' + rows[i].title + '\nAuthor: ' + rows[i].author + '\nCategory: ' + rows[i].category + '\nStatus: ' + brwr;
 			}
 
-			var FBMessenger = require('fb-messenger');
-			var messenger = new FBMessenger("EAAdZAxldZCpbkBAFQoJUsrhZAPwVpw2qYxf4b6ffTByZAfQNNVNtRaZCQhg7RuETKKHkdvWsqasZAsew4EruMfSEaYZBaZAvBUpSXqvjKXY0N4psTZCQFd3AaYZAvvnzwy483zhFCRLG2NC0TZAeD2gVuIvVr0KkaXsyeV0FcEWjffvBgZDZD");
+			// var FBMessenger = require('fb-messenger');
+			// var messenger = new FBMessenger("EAAdZAxldZCpbkBAFQoJUsrhZAPwVpw2qYxf4b6ffTByZAfQNNVNtRaZCQhg7RuETKKHkdvWsqasZAsew4EruMfSEaYZBaZAvBUpSXqvjKXY0N4psTZCQFd3AaYZAvvnzwy483zhFCRLG2NC0TZAeD2gVuIvVr0KkaXsyeV0FcEWjffvBgZDZD");
 			
-			var id = req.body.originalDetectIntentRequest.payload.data.sender.id;
-			messenger.sendTextMessage(id, 'Do you wish to borrow this book? Try \'borrow book title\'', function (err, body) {
-			  if(err) return console.error(err)
-			})
+			// var id = req.body.originalDetectIntentRequest.payload.data.sender.id;
+			// messenger.sendTextMessage(id, 'Do you wish to borrow this book? Try \'borrow book title\'', function (err, body) {
+			//   if(err) return console.error(err)
+			// })
+			pushNotif(db, req, res);
 			return res.json({ fulfillmentText: val });
 		});
 	} else {
