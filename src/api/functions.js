@@ -14,7 +14,8 @@ export function helpReply(db, req, res) {
 	            "show books by",
 	            "books about",
 	            "borrow book",
-	            "return book"
+	            "return book",
+	            "pass control"
 	          ]
 	        },
 	        "platform": "FACEBOOK"
@@ -23,6 +24,32 @@ export function helpReply(db, req, res) {
 	        "text": {
 	          "text": [
 	            "You can do the following:\n1. show all books\n2. search book title (can also include author and category)\n3. show books by author\n4. books about category\n5. borrow book\n6. return book"
+	          ]
+	        }
+	      }
+	    ]
+	});
+}
+
+export function helpJoke(db, req, res) {
+
+	return res.json({
+		"fulfillmentText": "You can do the following:\n1. jokes\n2. return control",
+	    "fulfillmentMessages": [
+	      {
+	        "quickReplies": {
+	          "title": "You can do the following:",
+	          "quickReplies": [
+	            "jokes",
+	            "return control"	            
+	          ]
+	        },
+	        "platform": "FACEBOOK"
+	      },
+	      {
+	        "text": {
+	          "text": [
+	            "You can do the following:\n1. jokes\n2. return control"
 	          ]
 	        }
 	      }

@@ -18,6 +18,8 @@ export default ({ config, db }) => {
 		console.log(req.body.result.action);
 		if(req.body.result.action === "returnThreadControl"){
 			funcs.returnThreadControl(db, req, res);
+		} else if (req.body.result.action === "help") {
+			return funcs.helpJoke(db, req, res);
 		}
 		// console.log(req.body.originalDetectIntentRequest.payload.data);
 	});
