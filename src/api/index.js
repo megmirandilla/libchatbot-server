@@ -15,14 +15,17 @@ export default ({ config, db }) => {
 	});
 
 	api.post('/jokes', (req, res) => {
-		console.log("jokes");
-		console.log(req.body.originalDetectIntentRequest.payload.data);
+		console.log(req.body.result.action);
+		if(req.body.result.action === "returnThreadControl"){
+			funcs.returnThreadControl(db, req, res);
+		}
+		// console.log(req.body.originalDetectIntentRequest.payload.data);
 	});
 
 	api.post('/libraryBot', (req, res) => {
 		
 		funcs.addUser(db, req, res);
-		console.log(req.body.queryResult.action);
+		// console.log(req.body.queryResult.action);
 		
 		switch(req.body.queryResult.action){
 			case 'libraryBooks':

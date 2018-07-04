@@ -85,11 +85,10 @@ export function pushNotif(db, req, res) {
 
 export function returnThreadControl(db, req, res) {
 	var body = { 
-		"recipient":{"id":req.body.originalDetectIntentRequest.payload.data.sender.id},
-		"target_app_id":2073974752921975,
-		"metadata":"String to pass to secondary receiver app"
+		"recipient":{"id":req.body.originalRequest.data.sender.id},
+		"metadata":"String to pass to the secondary receiver"
 	 };
-	fetch('https://graph.facebook.com/v2.6/me/pass_thread_control?access_token=EAAdZAxldZCpbkBAFQoJUsrhZAPwVpw2qYxf4b6ffTByZAfQNNVNtRaZCQhg7RuETKKHkdvWsqasZAsew4EruMfSEaYZBaZAvBUpSXqvjKXY0N4psTZCQFd3AaYZAvvnzwy483zhFCRLG2NC0TZAeD2gVuIvVr0KkaXsyeV0FcEWjffvBgZDZD', { 
+	fetch('https://graph.facebook.com/v2.6/me/take_thread_control?access_token=EAAdZAxldZCpbkBAFQoJUsrhZAPwVpw2qYxf4b6ffTByZAfQNNVNtRaZCQhg7RuETKKHkdvWsqasZAsew4EruMfSEaYZBaZAvBUpSXqvjKXY0N4psTZCQFd3AaYZAvvnzwy483zhFCRLG2NC0TZAeD2gVuIvVr0KkaXsyeV0FcEWjffvBgZDZD', { 
 		method: 'POST',
 		body:    JSON.stringify(body),
 		headers: { 'Content-Type': 'application/json' },
