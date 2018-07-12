@@ -21,13 +21,11 @@ export default ({ config, db }) => {
 		} else if (req.body.result.action === "help") {
 			return funcs.helpJoke(db, req, res);
 		}
-		// console.log(req.body.originalDetectIntentRequest.payload.data);
 	});
 
 	api.post('/libraryBot', (req, res) => {
 		
 		funcs.addUser(db, req, res);
-		// console.log(req.body.queryResult.action);
 		
 		switch(req.body.queryResult.action){
 			case 'libraryBooks':
