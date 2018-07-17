@@ -18,6 +18,7 @@ export default ({ config, db }) => {
 		console.log(req.body.result.action);
 		if(req.body.result.action === "returnThreadControl"){
 			funcs.returnThreadControl(db, req, res);
+			// res.json({fulfillmentText:"Returned control to LibraryBot! Say hi!"});			
 		} else if (req.body.result.action === "help") {
 			return funcs.helpJoke(db, req, res);
 		}

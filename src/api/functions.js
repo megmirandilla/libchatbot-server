@@ -101,7 +101,7 @@ export function pushNotif(db, req, res) {
 		"text": "Do you wish to borrow this book? Try \'borrow book title\'"
 		}
 	 };
-	fetch('"https://graph.facebook.com/v2.6/me/messages?access_token="https://graph.facebook.com/v2.6/me/messages?access_token=EAAdZAxldZCpbkBAFQoJUsrhZAPwVpw2qYxf4b6ffTByZAfQNNVNtRaZCQhg7RuETKKHkdvWsqasZAsew4EruMfSEaYZBaZAvBUpSXqvjKXY0N4psTZCQFd3AaYZAvvnzwy483zhFCRLG2NC0TZAeD2gVuIvVr0KkaXsyeV0FcEWjffvBgZDZD', { 
+	fetch('"https://graph.facebook.com/v2.6/me/messages?access_token="https://graph.facebook.com/v2.6/me/messages?access_token=EAAdZAxldZCpbkBALbPPKZBesSmZCG11YNNz1hN2x1U40tHXiZAV14rdBrtn7zwQmCQqDWgKmF5VfZBkZBzC4A5uATlpDGjEajSK76ZCjHvuElRLbJoeqtymhfr5W8yvj7sZBz1ZAP1s7gtS5wYvkJHhUhdaOUNU2xEkLK444OUZCF1hQAZDZD', { 
 		method: 'POST',
 		body:    JSON.stringify(body),
 		headers: { 'Content-Type': 'application/json' },
@@ -115,7 +115,7 @@ export function returnThreadControl(db, req, res) {
 		"recipient":{"id":req.body.originalRequest.data.sender.id},
 		"metadata":"String to pass to the secondary receiver"
 	 };
-	fetch('https://graph.facebook.com/v2.6/me/take_thread_control?access_token=EAAdZAxldZCpbkBAFQoJUsrhZAPwVpw2qYxf4b6ffTByZAfQNNVNtRaZCQhg7RuETKKHkdvWsqasZAsew4EruMfSEaYZBaZAvBUpSXqvjKXY0N4psTZCQFd3AaYZAvvnzwy483zhFCRLG2NC0TZAeD2gVuIvVr0KkaXsyeV0FcEWjffvBgZDZD', { 
+	fetch('https://graph.facebook.com/v2.6/me/take_thread_control?access_token=EAAdZAxldZCpbkBALbPPKZBesSmZCG11YNNz1hN2x1U40tHXiZAV14rdBrtn7zwQmCQqDWgKmF5VfZBkZBzC4A5uATlpDGjEajSK76ZCjHvuElRLbJoeqtymhfr5W8yvj7sZBz1ZAP1s7gtS5wYvkJHhUhdaOUNU2xEkLK444OUZCF1hQAZDZD', { 
 		method: 'POST',
 		body:    JSON.stringify(body),
 		headers: { 'Content-Type': 'application/json' },
@@ -130,13 +130,14 @@ export function passThreadControl(db, req, res) {
 		"target_app_id":2073974752921975,
 		"metadata":"String to pass to secondary receiver app"
 	 };
-	fetch('https://graph.facebook.com/v2.6/me/pass_thread_control?access_token=EAAdZAxldZCpbkBAFQoJUsrhZAPwVpw2qYxf4b6ffTByZAfQNNVNtRaZCQhg7RuETKKHkdvWsqasZAsew4EruMfSEaYZBaZAvBUpSXqvjKXY0N4psTZCQFd3AaYZAvvnzwy483zhFCRLG2NC0TZAeD2gVuIvVr0KkaXsyeV0FcEWjffvBgZDZD', { 
+	fetch('https://graph.facebook.com/v2.6/me/pass_thread_control?access_token=EAAdZAxldZCpbkBALbPPKZBesSmZCG11YNNz1hN2x1U40tHXiZAV14rdBrtn7zwQmCQqDWgKmF5VfZBkZBzC4A5uATlpDGjEajSK76ZCjHvuElRLbJoeqtymhfr5W8yvj7sZBz1ZAP1s7gtS5wYvkJHhUhdaOUNU2xEkLK444OUZCF1hQAZDZD', { 
 		method: 'POST',
 		body:    JSON.stringify(body),
 		headers: { 'Content-Type': 'application/json' },
 	})
 		.then(res => res.json())
 			.then(json => console.log(json));
+			res.json({fulfillmentText:"Passed control to Jokes! Say hi!"});
 }
 
 export function searchBookTitle(db, req, res) {
